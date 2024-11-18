@@ -27,7 +27,7 @@ Host: Zabbix
 ```
 Host: Zabbix
   Items 
-    Name: Свободное место на диске
+    Name: Net ip status
     Type: Zabbix agent
     Key: net.if.status[eth0]
     Type of information: Numeric (float)
