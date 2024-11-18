@@ -1,6 +1,6 @@
-Установки Zabix 
+Установки Zabbix 
 
-Устиановка MySQL для сервера Zabbix
+Устиановка MySQL для сервера Server
 ```
 apt update
 
