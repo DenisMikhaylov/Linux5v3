@@ -9,7 +9,7 @@
 
 Настройка лабораторного стенда:
 
-Virtual machines: Zabbix, Gate
+Virtual machines: server, Gate
 
 User name: root
 
@@ -27,8 +27,7 @@ Password: Pa$$w0rd
 
 Для мониторинга будем использовать базу данных Zabbix.
 
-Подключаемся на сервер Zabbix через putty.
-Для подключения используем ip адрес 192.168.10.41
+Подключаемся на сервер server через putty.
 
 Установка Mysql odbc driver
 ```
@@ -89,9 +88,7 @@ SQL> quit;
 Шаг 3. Настройка на Zabbix Тестового элемента.
 
 Подключиться на браузере к серверу Zabbix
-```
-http://zabbix.corp1.ru
-```
+
 Настройка элемента мониторинга
 ```
 Host: Zabbix
@@ -105,6 +102,8 @@ Host: Zabbix
 ```
 Monitors -> Latest data-> Mysql host count
 ```
+
+Добавьте шаблон для Mysql по ODBC
 
 
 Results: После выполнения данной лабораторной, вы успешно создадите подключение Zabbix к MySQL по средствам ODBC Driver.
