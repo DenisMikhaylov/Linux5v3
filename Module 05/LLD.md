@@ -185,4 +185,5 @@ Add
       Name: On {HOST.NAME} in the DHCP pool {#POOLNAME}
      
       Expression:
-                  last(/Template App DHCP Pools/dhcp.pools.shared-networ
+                  last(/Template App DHCP Pools/dhcp.pools.shared-network[{#POOLNAME},used])/last(/Template App DHCP Pools/dhcp.pools.shared-network[{#POOLNAME},defined])*100 > {$DHCP.POOLS.MAX.PERCENT}
+      Severity: Warning
