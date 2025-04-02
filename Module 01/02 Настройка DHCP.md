@@ -43,7 +43,7 @@ apt install isc-dhcp-server
 ### **Задача 2: Настройка сетевого инетерфейса для DHCP**
 Настройка Интерфейса
 
-Добавить настройку сетевого интерфейса
+1. Добавить настройку сетевого интерфейса
 
 ```
 nano /etc/default/isc-dhcp-server
@@ -55,7 +55,7 @@ INTERFACESv4="enp0s8"
 
 ### **Задача 3: Настройка Scope для DHCP**
 
-Настройка scope
+1. Настройка scope
 ```
 nano /etc/dhcp/dhcpd.conf
 ```
@@ -76,20 +76,20 @@ shared-network LAN1 {
 ```
 ### **Задача 4: Проверка DHCP**
 
-Проверка DHCP
+1. Проверка DHCP
 ```
 dhcpd -t
 ```
-Перезапуск службы DHCP
+2. Перезапуск службы DHCP
 ```
 service isc-dhcp-server restart
 ```
-Проверка статуса DHCP
+3. Проверка статуса DHCP
 ```
 service isc-dhcp-server status
 ```
 
-Мониторинг работы DHCP
+4. Мониторинг работы DHCP
 ```
 dhcp-lease-list
 ```
