@@ -2,7 +2,7 @@
 
 Установить агента на gate
 
-Процедура установки последней версии агента на сайтек Zabbix
+Процедура установки последней версии агента на сайте Zabbix
 ```
 https://www.zabbix.com/download?zabbix=6.4&os_distribution=debian&os_version=11&components=agent&db=&ws=
 ```
