@@ -33,9 +33,9 @@ password: password
 
 ### **Задача 1: Настройка Виртуальной машины Windows**
 
-Настройка server
+Настройка windows
 
-Server предназначен для Zabbix
+windows предназначен для мониторинга
 
 Настройка системы виртуализации например в Oracle VM VirtualBox
 
