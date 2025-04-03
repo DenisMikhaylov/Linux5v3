@@ -74,5 +74,18 @@ TLSPSKIdentity=Debian   такое же должно использоватьс�
 systemctl restart zabbix-agent
 systemctl enable zabbix-agent
 ```
+9. Проверка работы с zabbix server
+10. Подключиться к терминалу Server
+11. Проверить получение данных для Debian агента
+
+```
+
+zabbix_get -s IP/DNSNAME  -p 10050 -k agent.version --tls-connect=psk --tls-psk-identity="Debian" --tls-cipher='ключ'
+
+```
+или если файл адеиный и скачен на сервер
+```
+zabbix_get -s IP/DNSNAME  -p 10050 -k agent.version --tls-connect=psk --tls-psk-identity="Debian" --tls-psk-file=<путь до psk файлв>
+```
 
 
