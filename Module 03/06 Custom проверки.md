@@ -31,17 +31,20 @@ password: password
 
 ### **Задача 1: Внешние проверки с использованием ExternalScripts **
 
-1. Gjlrk.xbnmcz 
-Проверяем путь до внешних скриптов
+1. Подключиться по SSH к Server
+
+2. Получить текущий путь для внешних скриптов
 
 ```
-server# zabbix_server --help | grep ExternalScripts
+zabbix_server --help | grep ExternalScripts
 ```
-Настройка внешних скриптов
+
+3. Настройка внешних скриптов
 
 ```
-server# nano /etc/zabbix/zabbix_server.conf
+nano /etc/zabbix/zabbix_server.conf
 ```
+4. Изменить следующе строки
 ```
 ...
 Timeout=30
@@ -49,27 +52,30 @@ Timeout=30
 ExternalScripts=/etc/zabbix/externalscripts
 ...
 ```
-Создание директории
+5. Создание директории для внешних скриптов
 
 ```
-server# mkdir /etc/zabbix/externalscripts
+mkdir /etc/zabbix/externalscripts
 ```
-Скрипт 1
+6. Создание первого скрипта 
+Скрипт для получение среднего значение пинга
 ```
-server# nano /etc/zabbix/externalscripts/ping_avg.sh
+nano /etc/zabbix/externalscripts/ping_avg.sh
 ```
 ```
 #!/bin/sh
 ping -c"$1" "$2" | tail -n1 | cut -d'/' -f5
 ```
+6.1. Добавление прав на скрипт
 ```
-server# chmod +x /etc/zabbix/externalscripts/ping_avg.sh
+chmod +x /etc/zabbix/externalscripts/ping_avg.sh
 ```
-Проверка работы скрипта
+6.2. Проверка работы скрипта
 ```
-server# /etc/zabbix/externalscripts/ping_avg.sh 3 ya.ru
+/etc/zabbix/externalscripts/ping_avg.sh 3 ya.ru
 ```
-Настройка приминения скрипта 1
+
+6.3. Настройка приминения первого скрипта
 ```
 Cofiguration->Hosts->ya.ru или google.com
   Items
@@ -79,22 +85,26 @@ Cofiguration->Hosts->ya.ru или google.com
     Type of information: Numeric (float)
     Units: ms
 ```
-Скрипт 2
 
+7. Создание второго скрипта 
 Сервис speedtest
-Установка speedtest на Server
-```
-# apt install speedtest-cli
 
-# time speedtest-cli
-
-# speedtest-cli --csv-header
-
-# speedtest-cli --csv
+7.1. Установка speedtest на Server
 ```
-Настройка внешнего скрипта
+apt install speedtest-cli
 ```
-server# cat /etc/zabbix/externalscripts/speedtest.sh
+7.2. Проверка работы приложения
+```
+time speedtest-cli
+
+speedtest-cli --csv-header
+
+speedtest-cli --csv
+```
+
+7.3. Настройка внешнего скрипта
+```
+nano /etc/zabbix/externalscripts/speedtest.sh
 ```
 ```
 #!/bin/sh
@@ -113,19 +123,22 @@ fi
 
 speedtest-cli --csv $A | cut -d',' -f $F
 ```
+7.4. Выдача прав на скрипт
 ```
-server# chmod +x /etc/zabbix/externalscripts/speedtest.sh
+chmod +x /etc/zabbix/externalscripts/speedtest.sh
 ```
-Проверка работы
+7.5. Проверка работы
 ```
-# /etc/zabbix/externalscripts/speedtest.sh upload
+/etc/zabbix/externalscripts/speedtest.sh upload
 ```
+
 ```
-# /etc/zabbix/externalscripts/speedtest.sh download
+/etc/zabbix/externalscripts/speedtest.sh download
 ```
-Настройка мониторинга
+
+7.6. Настройка мониторинга
 ```
-Cofiguration->Hosts->server
+Cofiguration->Hosts->Server
   Items
     Name: speedtest download
     Type: External Check
