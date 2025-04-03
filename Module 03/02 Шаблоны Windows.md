@@ -1,20 +1,46 @@
-Настройка базововго мониторинга Windows
+---
+Практическая работа:
+    Название: 'Шаблоны.'
+    Действие: 'Модуль третий'
+    Задача: ' Шаблоны Windows'
+---
+# **Добавлени нод**
 
-Добавить узел Windows в мониторинг 
+В данной практической работе мы добавим шаблоны windows .
+
+Этапы создания стенда:
+
+- Добавление шаблонов Windows
 
 
-Применение к нему шаблона “Windows by Zabbix agent”
+Имена пользователей и пароли:
+```
+Для denian
+login: student 
+password: 111
+
+login: root 
+password: 111
+```
+```
+Для Windows
+login: Student 
+password: password
+```
+### **Практическая работа**
+
+### **Задача 1: Добавление шаблонов Windows **
+
+1. открыть веб инетерфейс Zabbix
+
+Применение шаблона “Windows by Zabbix agent”
 
 ```
 Host: Gate
-  Agent 
-    IP: <ip windows>
+  
   Template:
     Windows by Zabbix agent
-  Host Group:
-    My Host
-  Tag:
-    Host: Windows
+
 ```
 
 Подождать 5 минут. Обновить экран.
