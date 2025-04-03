@@ -187,62 +187,6 @@ Data collection->Hosts->Gate
     Type of information: Text
 ```
 
-Настройка мониторинга DHCP
-
-Переключиться на gate
-
-Проверить что возвращает скрипт
-```
-dhcpd-pools -l /var/lib/dhcp/dhcpd.leases -c /etc/dhcp/dhcpd.conf
-```
-Создание скрипта
-```
-gate# nano /usr/local/bin/dhcp_stat.sh
-```
-```
-#!/bin/sh
-
-CMD='/usr/bin/dhcpd-pools -l /var/lib/dhcp/dhcpd.leases -c /etc/dhcp/dhcpd.conf -f c | grep 192.168.'
-MAX=`eval $CMD | cut -d'"' -f8`
-CUR=`eval $CMD | cut -d'"' -f10`
-
-eval RES=\$$1
-
-echo $RES
-```
-Проверка 
-```
-gate# /usr/local/bin/dhcp_stat.sh MAX
-
-gate# /usr/local/bin/dhcp_stat.sh CUR
-```
-Переключиться на server
-
-```
-server:~$ ssh root@gate /usr/local/bin/dhcp_stat.sh CUR
-
-server:~$ ssh root@gate /usr/local/bin/dhcp_stat.sh MAX
-```
-Создание скрипта для мониторинга
-```
-server# nano /etc/zabbix/externalscripts/dhcp_stat_ext.sh
-```
-
-```
-#!/bin/sh
-ssh root@$1 /usr/local/bin/dhcp_stat.sh $2
-```
-Проверка скрипта
-```
-server:~$ /etc/zabbix/externalscripts/dhcp_stat_ext.sh gate CUR
-```
-```
-gate->Items
-  Name: DHCP stat CUR
-  Type: External check
-  Key: dhcp_stat_ext.sh["{HOST.CONN}",CUR]
-```
-
 Создание проверок по средствам trapper
 
 Создание элемента
