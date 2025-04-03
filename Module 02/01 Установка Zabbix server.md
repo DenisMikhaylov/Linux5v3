@@ -13,7 +13,7 @@ apt install default-mysql-server
 Действия производяться согласно описанию приведенному на страницы.
 
 ```
-https://www.zabbix.com/download?zabbix=6.4&os_distribution=debian&os_version=11&components=server_frontend_agent&db=mysql&ws=apache
+[https://www.zabbix.com/download?zabbix=6.4&os_distribution=debian&os_version=11&components=server_frontend_agent&db=mysql&ws=apache](https://www.zabbix.com/ru/download)
 ```
 Запуск и настройка Zabbix
 
