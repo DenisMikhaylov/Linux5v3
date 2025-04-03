@@ -4,13 +4,13 @@
     Действие: 'Модуль третий'
     Задача: ' Кастомные проверки'
 ---
-# **Добавлени нод**
+# **Расширение сбора информации**
 
-В данной практической работе мы добавим Кастомные проверки .
+В данной практической работе мы добавим расширенный сбор данных.
 
 Этапы создания стенда:
 
-- Добавление Кастомные проверки
+- Добавление расширенных проверок проверок
 
 
 Имена пользователей и пароли:
@@ -29,7 +29,7 @@ password: password
 ```
 ### **Практическая работа**
 
-### **Задача 1: Внешние проверки с использованием ExternalScripts **
+### **Задача 1: Внешние проверки с использованием ExternalScripts**
 
 1. Подключиться по SSH к Server
 
@@ -77,7 +77,7 @@ chmod +x /etc/zabbix/externalscripts/ping_avg.sh
 
 6.3. Настройка приминения первого скрипта
 ```
-Cofiguration->Hosts->ya.ru или google.com
+Data collection->Hosts->ya.ru или google.com
   Items
     Name: Ping AVG
     Type: External Check
@@ -138,7 +138,7 @@ chmod +x /etc/zabbix/externalscripts/speedtest.sh
 
 7.6. Настройка мониторинга
 ```
-Cofiguration->Hosts->Server
+Data collection->Hosts->Server
   Items
     Name: speedtest download
     Type: External Check
@@ -147,7 +147,7 @@ Cofiguration->Hosts->Server
     Update interval: 30m
 
 ...
-Cofiguration->Hosts->server
+Data collection->Hosts->server
   Items
     Name: speedtest upload
     Type: External Check
@@ -157,38 +157,43 @@ Cofiguration->Hosts->server
  
 ...
 ```
-Скрипт 3
+8. Создание третьего скрипта
 
 Использование утилиты nmap
 
-Установить на сервер
+8.1. Установить на сервер
 ```
 apt install nmap
-
 ```
-Настройка
+8.2. Создание скрипта
 ```
-server# nano /etc/zabbix/externalscripts/detect_host_nmap.sh
+nano /etc/zabbix/externalscripts/detect_host_nmap.sh
 ```
 ```
 #!/bin/sh
 sudo /usr/bin/nmap -O $1 | grep -v 'Starting Nmap\|Host is up\|Nmap done'
 ```
+8.3. Выдача прав на скрипт
 ```
-Cofiguration->Hosts->gate
+chmod +x /etc/zabbix/externalscripts/detect_host_nmap.shh
+```
+8.4. Настройка сбора данных
+```
+Data collection->Hosts->Gate
   Items
     Name: Detect host operating system by nmap
     Type: External Check
     Key: detect_host_nmap.sh["{HOST.CONN}"]
     Type of information: Text
 ```
+
 Настройка мониторинга DHCP
 
 Переключиться на gate
 
 Проверить что возвращает скрипт
 ```
-gate# dhcpd-pools -l /var/lib/dhcp/dhcpd.leases -c /etc/dhcp/dhcpd.conf
+dhcpd-pools -l /var/lib/dhcp/dhcpd.leases -c /etc/dhcp/dhcpd.conf
 ```
 Создание скрипта
 ```
