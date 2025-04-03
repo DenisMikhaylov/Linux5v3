@@ -1,15 +1,5 @@
 Переключаемся на gate
-```
-# nano /etc/zabbix/zabbix_agentd.d/my.linux.disk.discovery.conf
-```
-```
-UserParameter=my.disks.discovery,/bin/lsblk -dJ | /bin/sed -e 's/blockdevices/data/' -e 's/name/{#NAME}/g' -e 's/type/{#TYPE}/g'
-```
-Проверяем работу нового параметра , переключаемся на server
-
-```
-# zabbix_get -s ip gate -k my.disks.discovery | jq
-```
+Настройка мониторинга дисков по средствам lld
 Создаем шаблон 
 
 ```
