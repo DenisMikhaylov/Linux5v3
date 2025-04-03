@@ -294,21 +294,67 @@ zabbix_get -s 192.168.10.1 -k my.disks.discovery | jq
 
 11. Настройка монитринга DHCP на Gate
 
+11.1. Переключиться на gate
+
+11.2. Установка средст мониторинга 
+```
+apt install dhcpd-pools
+```
+
+11.3. Получение информации о работе DHCP 
+```
+dhcpd-pools -l /var/lib/dhcp/dhcpd.leases -c /etc/dhcp/dhcpd.conf
+```
+
+11.4. Создание скрипта для мониторинга DHCP
 
 ```
-gate# nano /etc/zabbix/zabbix_agentd.d/dhcp_stat.conf
+nano /usr/local/bin/dhcp_stat.sh
+```
+```
+#!/bin/sh
+
+CMD='/usr/bin/dhcpd-pools -l /var/lib/dhcp/dhcpd.leases -c /etc/dhcp/dhcpd.conf -f c | grep 192.168.'
+MAX=`eval $CMD | cut -d'"' -f8`
+CUR=`eval $CMD | cut -d'"' -f10`
+
+eval RES=\$$1
+
+echo $RES
+```
+11.5. Выдача прав на скрипт
+```
+chmod +x /usr/local/bin/dhcp_stat.sh
+```
+11.6. Проверка отрабатывания скрипта
+```
+/usr/local/bin/dhcp_stat.sh MAX
+```
+```
+/usr/local/bin/dhcp_stat.sh CUR
+```
+11.7. Настройка Zabbix agent для сборки статистики по DHCP
+
+```
+nano /etc/zabbix/zabbix_agentd.d/dhcp_stat.conf
 ```
 
 ```
 UserParameter=dhcp.stat[*],/usr/local/bin/dhcp_stat.sh $1
 ```
-Тестирование 
+
+11.8. Переключаемся на server и проверяем возврат информации
 ```
-server# zabbix_get -s gate -k dhcp.stat[CUR]
-server# zabbix_get -s gate -k dhcp.stat[MAX]
+zabbix_get -s 192.168.10.1 -k dhcp.stat[CUR]
 ```
-Настройа мониторинга установленного ПО
-Пеерключаемся на Server
+```
+zabbix_get -s 192.168.10.1 -k dhcp.stat[MAX]
+```
+
+
+Настройка мониторинга установленного ПО
+
+Переключаемся на Server
 
 ```
 server# nano /etc/zabbix/zabbix_agentd.conf.d/listinstalledsoft.conf
