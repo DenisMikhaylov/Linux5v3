@@ -352,29 +352,12 @@ zabbix_get -s 192.168.10.1 -k dhcp.stat[MAX]
 ```
 
 
-Настройка мониторинга установленного ПО
+12. Настройка Вычисляемых элементов
 
-Переключаемся на Server
-
+12.1. Открыть веб консоль Zabbix
+12.2. Настройка мониторинга DHCP 
 ```
-server# nano /etc/zabbix/zabbix_agentd.conf.d/listinstalledsoft.conf
-```
-```
-UserParameter=listinstalledsoft,ls /usr/share/applications | awk -F '.desktop' ' { print $1}' -
-```
-
-Вычисляемые элементы
-```
-ya.ru->Items
-  Name: avg perf http
-    Type: Calculated
-    Key:  my.avg.perf.http
-    Formula: avg(net.tcp.service.perf[https],5m)
-    Type of information: Numeric (float)
-```
-
-```
-gate->Items
+Data collection->Hosts->gate->Items
   Name: DHCP stat CUR
     Type: Zabbix agent
     Key: dhcp.stat[CUR]
@@ -382,37 +365,44 @@ gate->Items
   Name: DHCP stat MAX
     Type: Zabbix agent
     Key: dhcp.stat[MAX]
-    
+```
+12.3. Добавление вычисляемого элемента
+```    
   Name: DHCP stat CUR MAX percent
     Type: Calculated
     Key:  DHCP.stat.CUR.MAX.percent
     Formula: last(dhcp.stat[CUR])/last(dhcp.stat[MAX])*100
 ```
 
-Задание 5. Создание зависимых элементов
 
-Шаг 1. Создание мастер элемента
+13. Создание зависимых элементов
 
-На Gate
+13.1. Подключиться на gate по SSH
 
+13.2. Установка веб сервера
 ```
 apt install nginx
 ```
+13.3. Настрйка прав для файла лога
 ```
 chmod o+r /var/log/nginx/access.log
 ```
+
+13.4. Открыть веб консоль Zabbix
+
+13.5. Создать новый Item 
 ```
-Host: gate
+Data collection->Host-> gate
 
   Items
     Name: HTTP Access Log
     Type: agent zabbix active
     Key: log[/var/log/nginx/access.log,"^.*",,,skip,\0,,,]
     Type of Information:	Log
+```
 
-Шаг 2. Создание дочерних элементов
-Host: gate
-
+13.6. Создание дочерних элементов
+```
   Items
     Name: Status Code
     Type: Dependent Item
@@ -438,4 +428,8 @@ Regular Expression:
 Output: \6
 Type : text
 ```
+
+13.7. Открыть сайт в браузере http://192.168.10.1 или Http://<внешний ip адрес>
+
+13.8. Првоерить полученные данные.
 
