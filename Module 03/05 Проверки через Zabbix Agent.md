@@ -1,7 +1,42 @@
+---
+Практическая работа:
+    Название: 'Шаблоны.'
+    Действие: 'Модуль третий'
+    Задача: ' Дополнительное элементы'
+---
+# **Добавлени нод**
+
+В данной практической работе мы добавим Дополнительное элементы.
+
+Этапы создания стенда:
+
+- Добавление дополнительное элементы
+
+
+Имена пользователей и пароли:
+```
+Для denian
+login: student 
+password: 111
+
+login: root 
+password: 111
+```
+```
+Для Windows
+login: Student 
+password: password
+```
+### **Практическая работа**
+
+### **Задача 1: Настройка дополнительное элементы **
+
+1. открыть веб инетерфейс Zabbix
+
 Монитринг через Zabbix Agent
 
 ```
-Host: Zabbix
+Host: Server
   Items 
     Name: Использование процессора
     Type: Zabbix agent
@@ -9,7 +44,7 @@ Host: Zabbix
     Type of information: Numeric (float)
 ```
 ```
-Host: Zabbix
+Host: Server
   Items 
     Name: Использование оперативной памяти
     Type: Zabbix agent
@@ -17,7 +52,7 @@ Host: Zabbix
     Type of information: Numeric (float)
 ```
 ```
-Host: Zabbix
+Host: Server
   Items 
     Name: Свободное место на диске
     Type: Zabbix agent
@@ -25,7 +60,7 @@ Host: Zabbix
     Type of information: Numeric (float)
 ```
 ```
-Host: Zabbix
+Host: Server
   Items 
     Name: Net ip status
     Type: Zabbix agent
