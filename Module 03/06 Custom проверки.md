@@ -187,27 +187,33 @@ Data collection->Hosts->Gate
     Type of information: Text
 ```
 
-Создание проверок по средствам trapper
+9. Создание проверок по средствам trapper
 
-Создание элемента
+9.1 Переключиться в веб интерфейс Zabbix
+
+9.2. Создание элемента
 ```
-server->Items
+Data collection->Hosts->server->Items
   Name: my item
     Type: Zabbix trapper
     Key:  my.item
     Allowed hosts: 127.0.0.1, 192.168.10.0/24
 ```
-Установка 
+9.3. Подключиться к Server по SSH
+
+9.4. Установка Zabbix sender на Server
+
 ```
-# apt install zabbix-sender
+apt install zabbix-sender
 ```
+9.5. Отправка данных на Item
 ```
-$ zabbix_sender -z <ip server> -p 10051 -s server -k my.item -o 1
+$ zabbix_sender -z 192.168.10.10 -p 10051 -s server -k my.item -o 1
 ```
 
-Перенастройка speedtest
+9.6. Перенастройка speedtest на Trapper
 ```
-server->Items
+Data collection->Hosts->server->Items
   Name: speedtest download trap
     Type: Zabbix trapper
     Key:  speedtest.download
@@ -220,11 +226,14 @@ server->Items
     Type of information: Numeric (float) или Numeric (unsigned)
     Allowed hosts: 127.0.0.1
 ...
+
 ```
-Настройка скрипта
+9.7. Создание скрипта для Trapper
+
 ```
-server# nano /root/speedtest.sh
+nano /root/speedtest.sh
 ```
+
 ```
 #!/bin/sh
 
@@ -238,31 +247,54 @@ MY_UPLOAD=`echo $MY_RES | cut -d',' -f8`
 #MY_DOWNLOAD=`echo $MY_RES | cut -d',' -f6`
 #Y_UPLOAD=`echo $MY_RES | cut -d',' -f7`
 
-zabbix_sender -z 127.0.0.1 -p 10051 -s server.corpX.un -k speedtest.download -o $MY_DOWNLOAD
-zabbix_sender -z 127.0.0.1 -p 10051 -s server.corpX.un -k speedtest.upload -o $MY_UPLOAD
+zabbix_sender -z 127.0.0.1 -p 10051 -s server -k speedtest.download -o $MY_DOWNLOAD
+zabbix_sender -z 127.0.0.1 -p 10051 -s server -k speedtest.upload -o $MY_UPLOAD
 ```
+9.8. Выдача прав на скрипт
 ```
-# crontab -l
+chmod +x /root/speedtest.sh
+```
+
+9.9. Добавлание запуска скрипта в расписание
+```
+crontab -l
 ...
 X * * * * /root/speedtest.sh >/dev/null 2>&1
 ```
 
-Создание проверок по средствам UserParameter
+10. Создание проверок по средствам UserParameter
 
-Переключаемся на gate
+10.1. Переключаемся на gate
+
+10.2. Настройка файла конфигурации для Zabbix Agent
 
 ```
-# nano /etc/zabbix/zabbix_agentd.d/my.linux.disk.discovery.conf
+nano /etc/zabbix/zabbix_agentd.d/my.linux.disk.discovery.conf
 ```
+10.3. Добавить строку в файл конфигурации
 ```
 UserParameter=my.disks.discovery,/bin/lsblk -dJ | /bin/sed -e 's/blockdevices/data/' -e 's/name/{#NAME}/g' -e 's/type/{#TYPE}/g'
 ```
-Проверяем работу нового параметра , переключаемся на zabbix
+
+10.4. Gереключаемся на Server
+10.5. Проверяем работу нового ключа
 
 ```
-# zabbix_get -s ip gate -k my.disks.discovery | jq
+zabbix_get -s 192.168.10.1 -k my.disks.discovery 
 ```
-Настройка DHCP на Gate
+10.6. Установка дополнително ПО для удобсва чтения
+
+```
+apt install jq
+```
+Повторная проверка 
+```
+zabbix_get -s 192.168.10.1 -k my.disks.discovery | jq
+```
+
+11. Настройка монитринга DHCP на Gate
+
+
 ```
 gate# nano /etc/zabbix/zabbix_agentd.d/dhcp_stat.conf
 ```
