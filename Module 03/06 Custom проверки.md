@@ -242,7 +242,7 @@ nano /root/speedtest.sh
 #!/bin/sh
 
 ### speedtest-cli ### result bits/s
-MY_RES=`speedtest-cli --csv`
+MY_RES=`speedtest-cli --csv --secure`
 MY_DOWNLOAD=`echo $MY_RES | cut -d',' -f7`
 MY_UPLOAD=`echo $MY_RES | cut -d',' -f8`
 
@@ -251,8 +251,8 @@ MY_UPLOAD=`echo $MY_RES | cut -d',' -f8`
 #MY_DOWNLOAD=`echo $MY_RES | cut -d',' -f6`
 #Y_UPLOAD=`echo $MY_RES | cut -d',' -f7`
 
-zabbix_sender -z 127.0.0.1 -p 10051 -s server -k speedtest.download -o $MY_DOWNLOAD
-zabbix_sender -z 127.0.0.1 -p 10051 -s server -k speedtest.upload -o $MY_UPLOAD
+zabbix_sender -z 127.0.0.1 -p 10051 -s Server -k speedtest.download -o $MY_DOWNLOAD
+zabbix_sender -z 127.0.0.1 -p 10051 -s Server -k speedtest.upload -o $MY_UPLOAD
 ```
 9.8. Выдача прав на скрипт
 ```
