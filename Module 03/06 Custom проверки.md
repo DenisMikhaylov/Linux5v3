@@ -52,6 +52,10 @@ Timeout=30
 ExternalScripts=/etc/zabbix/externalscripts
 ...
 ```
+4.1 Перезапустить zabbix server
+```
+systemctl restart zabbix-server.service
+```
 5. Создание директории для внешних скриптов
 
 ```
