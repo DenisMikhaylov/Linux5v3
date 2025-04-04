@@ -179,7 +179,7 @@ sudo /usr/bin/nmap -O $1 | grep -v 'Starting Nmap\|Host is up\|Nmap done'
 ```
 8.3. Выдача прав на скрипт
 ```
-chmod +x /etc/zabbix/externalscripts/detect_host_nmap.shh
+chmod +x /etc/zabbix/externalscripts/detect_host_nmap.sh
 ```
 8.4. Настройка сбора данных
 ```
