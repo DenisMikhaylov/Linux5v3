@@ -4,7 +4,7 @@
 
 Установка snmp консоли
 ```
-# apt install snmp snmp-mibs-downloader
+# apt install snmp
 # :> /etc/snmp/snmp.conf
 ```
 
