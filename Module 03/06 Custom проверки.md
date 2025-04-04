@@ -375,7 +375,7 @@ Data collection->Hosts->gate->Items
   Name: DHCP stat CUR MAX percent
     Type: Calculated
     Key:  DHCP.stat.CUR.MAX.percent
-    Formula: last(dhcp.stat[CUR])/last(dhcp.stat[MAX])*100
+    Formula: last(//dhcp.stat[CUR])/last(//dhcp.stat[MAX])*100
 ```
 
 
