@@ -279,8 +279,12 @@ nano /etc/zabbix/zabbix_agentd.d/my.linux.disk.discovery.conf
 ```
 UserParameter=my.disks.discovery,/bin/lsblk -dJ | /bin/sed -e 's/blockdevices/data/' -e 's/name/{#NAME}/g' -e 's/type/{#TYPE}/g'
 ```
-
+рестар агента
+```
+systemctl restart zabbix-agent
+```
 10.4. Gереключаемся на Server
+
 10.5. Проверяем работу нового ключа
 
 ```
