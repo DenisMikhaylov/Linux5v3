@@ -74,6 +74,9 @@ TLSPSKIdentity=Debian   такое же должно использоватьс�
 systemctl restart zabbix-agent
 systemctl enable zabbix-agent
 ```
+```bash
+zabbix_agentd -c /etc/zabbix/zabbix_agentd.conf -T
+```
 9. Проверка работы с zabbix server
 10. Подключиться к терминалу Server
 11. Проверить получение данных для Debian агента
