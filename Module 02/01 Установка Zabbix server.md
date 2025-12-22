@@ -45,9 +45,10 @@ student@server:~$ su -
 ```
 
 3. Устиановка MySQL для сервера Server
-```
+```bash
 apt update
-
+```
+```bash
 apt install default-mysql-server
 ```
 ### **Задача 2: Установка Zabbix server **
