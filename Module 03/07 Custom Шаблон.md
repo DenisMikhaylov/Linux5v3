@@ -40,7 +40,7 @@ password: password
   Templates Name: Template App SSH Port Service SSH Port Service
   Groups: My Template
       Items
-          Name: SSH service is running {HOST.NAME}
+          Name: SSH service is running
           Key: net.tcp.service[ssh,,{$SSH_PORT}]
           Update interval: 30s
       Macros
